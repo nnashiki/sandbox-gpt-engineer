@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class FileBase(BaseModel):
     id: int
     name: str
-    path: str
+    url: str
 
 from .database import Base
 
@@ -13,4 +13,3 @@ class File(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    path = Column(String)

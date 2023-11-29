@@ -1,5 +1,11 @@
-pip install --user fastapi
-pip install --user sqlalchemy
-pip install --user uvicorn
+cd ./api
+pip install -r requirements.txt
 
-uvicorn api.main:app --reload
+cd ../gui
+npm install
+
+cd ./api
+uvicorn main:app --reload &
+
+cd ../gui
+npm start &

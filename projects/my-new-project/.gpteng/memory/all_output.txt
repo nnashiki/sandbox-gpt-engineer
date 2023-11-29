@@ -1,38 +1,49 @@
-このエラーは、SQLiteデータベースに`files`テーブルが存在しない、または`files`テーブルに`name`カラムが存在しないことを示しています。FastAPIアプリケーションの起動時にテーブルを作成するように設定する必要があります。
+このエラーは、PDF.jsがPDFファイルを読み込むことができなかったことを示しています。これは、PDFファイルのパスが間違っている、またはPDFファイルが存在しない場合に発生します。
 
-まず、`models.py`で定義した`Base`を使用して、テーブルを作成します。これは`main.py`の中で行うことができます。
+まず、PDFファイルのパスが正しいことを確認します。PDFファイルのパスは、FastAPIサーバーからのレスポンスとしてフロントエンドに送られます。このパスは、`api/routes/files.py`で定義されています。
 
-### api/main.py
+### api/routes/files.py
 ```python
-from fastapi import FastAPI
+from fastapi import APIRouter, UploadFile, File
+from api import schemas, models
+from api.database import get_db
 from sqlalchemy.orm import Session
-from api import models, schemas
-from api.database import SessionLocal, engine
+import os
 
-models.Base.metadata.create_all(bind=engine)
+router = APIRouter()
 
-app = FastAPI()
+@router.post("/files/", response_model=schemas.File)
+def create_file(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    db_file = models.File(name=file.filename, path=os.path.join("files", file.filename))
+    db.add(db_file)
+    db.commit()
+    db.refresh(db_file)
+    return db_file
 ```
 
-このコードは、FastAPIアプリケーションが起動するときに、`models.py`で定義したすべてのテーブルをSQLiteデータベースに作成します。
+このコードは、アップロードされたファイルの名前とパスをデータベースに保存します。パスは、"files"ディレクトリとファイル名を結合したものです。
 
-次に、`files`テーブルの`name`カラムが存在することを確認します。
+次に、フロントエンドでPDFファイルのパスを正しく使用していることを確認します。これは、Reactコンポーネント`FileViewer.tsx`で行います。
 
-### api/models.py
-```python
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+### gui/src/components/FileViewer.tsx
+```jsx
+import React from 'react';
+import { Document, Page } from 'react-pdf';
 
-Base = declarative_base()
+const FileViewer = ({ file }) => {
+  return (
+    <Document
+      file={file.path}
+      onLoadSuccess={onDocumentLoadSuccess}
+    >
+      <Page pageNumber={pageNumber} />
+    </Document>
+  );
+};
 
-class File(Base):
-    __tablename__ = "files"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    path = Column(String)
+export default FileViewer;
 ```
 
-このコードは、`files`テーブルとそのカラム`id`、`name`、`path`を定義しています。
+このコードは、`file`プロップからPDFファイルのパスを取得し、PDF.jsに渡しています。
 
-これらの変更により、FastAPIアプリケーションが起動するときにSQLiteデータベースに`files`テーブルが作成され、`name`カラムが存在することが保証されます。したがって、エラーは解消されるはずです。
+これらのコードが正しく、PDFファイルが存在する場合、エラーは解消されるはずです。それでもエラーが解消しない場合は、PDFファイルが破損している可能性があります。

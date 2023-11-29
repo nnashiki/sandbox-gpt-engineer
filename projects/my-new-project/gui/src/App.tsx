@@ -8,7 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 interface File {
   id: number;
   name: string;
-  path: string;
+  url: string;
 }
 
 const App: React.FC = () => {
@@ -25,7 +25,7 @@ const App: React.FC = () => {
   }, []);
 
   const onFileSelect = (file: File) => {
-    setSelectedFile(file.path);
+    setSelectedFile(file.url);
   };
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
