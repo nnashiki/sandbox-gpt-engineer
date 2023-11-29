@@ -1,0 +1,38 @@
+このエラーは、SQLiteデータベースに`files`テーブルが存在しない、または`files`テーブルに`name`カラムが存在しないことを示しています。FastAPIアプリケーションの起動時にテーブルを作成するように設定する必要があります。
+
+まず、`models.py`で定義した`Base`を使用して、テーブルを作成します。これは`main.py`の中で行うことができます。
+
+### api/main.py
+```python
+from fastapi import FastAPI
+from sqlalchemy.orm import Session
+from api import models, schemas
+from api.database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+```
+
+このコードは、FastAPIアプリケーションが起動するときに、`models.py`で定義したすべてのテーブルをSQLiteデータベースに作成します。
+
+次に、`files`テーブルの`name`カラムが存在することを確認します。
+
+### api/models.py
+```python
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class File(Base):
+    __tablename__ = "files"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    path = Column(String)
+```
+
+このコードは、`files`テーブルとそのカラム`id`、`name`、`path`を定義しています。
+
+これらの変更により、FastAPIアプリケーションが起動するときにSQLiteデータベースに`files`テーブルが作成され、`name`カラムが存在することが保証されます。したがって、エラーは解消されるはずです。
