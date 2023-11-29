@@ -1,0 +1,57 @@
+PDF file viewer を作成してください。
+
+# アプリケーションの仕様
+## ファイルアップロード画面
+- ファイルをアップロードすると、バックエンドでファイルを保存し、sqliteにファイル一覧として保存をする。
+
+## ファイル一覧画面
+- 画面の左側にファイル一覧を表示する。
+- ファイル名をクリックすると、ページの右側にPDF.jsを使ってファイルを表示する。
+
+# バックエンド構成
+- バックエンドはFastAPIを利用する。
+- api フォルダー以下に、apiの実装をする。
+- __init__.py には "# This is __init__.py" とコメントを入れてください。
+- API 起動時に、sqliteのテーブルを作成する。
+- cors で全てを許可する
+
+```
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # すべてのオリジンを許可
+    allow_credentials=True,
+    allow_methods=["*"],  # すべての HTTP メソッドを許可
+    allow_headers=["*"],  # すべてのヘッダーを許可
+)
+```
+
+# フロントエンド構成
+- フロントエンドはReact(Typescript)とpdf.jsを利用する。
+- Reactのアプリはcreate-react-app (npx create-react-app <app-name-here> --template typescript)を利用して作成する。
+- gui フォルダー以下に、フロントエンドの実装をする。
+- npx create-react-app を実行すると以下のディレクトリが作成されます。
+
+```
+.
+├── README.md
+├── package-lock.json
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   └── robots.txt
+├── src
+│   ├── App.css
+│   ├── App.test.tsx
+│   ├── App.tsx
+│   ├── index.css
+│   ├── index.tsx
+│   ├── logo.svg
+│   ├── react-app-env.d.ts
+│   ├── reportWebVitals.ts
+│   └── setupTests.ts
+└── tsconfig.json
+```
