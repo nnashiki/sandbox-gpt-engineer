@@ -1,2 +1,18 @@
-ファイル一覧でファイルをクリックした際に、
-Failed to load PDF file. と表示されます。
+ERROR in src/App.tsx:34:44
+TS2339: Property 'id' does not exist on type 'never'.
+    32 |             <List>
+    33 |               {files.map((file) => (
+  > 34 |                 <ListItem button key={file.id} onClick={() => setSelectedFile(file)}>
+       |                                            ^^
+    35 |                   <ListItemText primary={file.name} />
+    36 |                 </ListItem>
+    37 |               ))}
+ERROR in src/App.tsx:35:47
+TS2339: Property 'name' does not exist on type 'never'.
+    33 |               {files.map((file) => (
+    34 |                 <ListItem button key={file.id} onClick={() => setSelectedFile(file)}>
+  > 35 |                   <ListItemText primary={file.name} />
+       |                                               ^^^^
+    36 |                 </ListItem>
+    37 |               ))}
+    38 |             </List>

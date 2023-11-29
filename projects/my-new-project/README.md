@@ -1,5 +1,3 @@
-このエラーは、PDF.jsがPDFファイルを読み込むことができなかったことを示しています。これは、PDFファイルのパスが間違っている、またはPDFファイルが存在しない場合に発生します。
+It appears that TypeScript is unable to infer the type of the `files` state array, which is causing the error. To resolve this, we need to explicitly define the type of the state when initializing it with `useState`. Let's update the `App.tsx` file to include the correct type definition for the `files` state.
 
-まず、PDFファイルのパスが正しいことを確認します。PDFファイルのパスは、FastAPIサーバーからのレスポンスとしてフロントエンドに送られます。このパスは、`api/routes/files.py`で定義されています。
-
-### api/routes/files.py
+#### gui/src/App.tsx (Updated)
