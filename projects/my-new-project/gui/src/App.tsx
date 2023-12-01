@@ -60,8 +60,12 @@ function App() {
             <Grid item xs={4}>
               <Paper>
                 <List>
-                  {files.map((file) => (
-                    <ListItem button key={file.id} onClick={() => setSelectedFile(file)}>
+                  {files.map((file, index) => (
+                    <ListItem
+                      key={file.id} 
+                      onClick={() => setSelectedFile(file)}
+                      style={{ backgroundColor: index % 2 === 1 ? 'lightgray' : 'inherit' }}
+                    >
                       <ListItemText primary={file.name} />
                     </ListItem>
                   ))}
