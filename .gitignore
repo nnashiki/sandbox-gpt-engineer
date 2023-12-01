@@ -1,7 +1,8 @@
 gpt-engineer
 .gpte_consent
 .gpteng/
-
+.gitignore
+test.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
