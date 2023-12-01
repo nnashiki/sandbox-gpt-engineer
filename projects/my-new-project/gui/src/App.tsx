@@ -60,6 +60,9 @@ function App() {
             <Grid item xs={4}>
               <Paper>
                 <List>
+                  <ListItem>
+                    <ListItemText primary="File Name" />
+                  </ListItem>
                   {files.map((file, index) => (
                     <ListItem
                       key={file.id} 
