@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "sandbox-gpt-engineer"
+version = "0.1.0"
+description = ""
+authors = ["Niten Nashiki <n.nashiki.work@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sandbox_gpt_engineer"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+gpt-engineer = "^0.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
