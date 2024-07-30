@@ -51,31 +51,39 @@ function App() {
 
   return (
       <div className="App">
-        <div className="file-upload">
-          <input type="file" onChange={handleFileChange} />
-          <button onClick={onFileUpload}>Upload</button>
-        </div>
         <RootContainer>
           <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Paper>
-                <List>
-                  <ListItem>
-                    <ListItemText primary="File Name" />
-                  </ListItem>
-                  {files.map((file, index) => (
-                    <ListItem
-                      key={file.id} 
-                      onClick={() => setSelectedFile(file)}
-                      style={{ backgroundColor: index % 2 === 1 ? 'lightgray' : 'inherit' }}
-                    >
-                      <ListItemText primary={file.name} />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
+            <Grid item xs={3}>
+              <Grid container direction="column">
+                <Grid item xs={12}>
+                  <Paper>
+                    <div className="file-upload">
+                      <input type="file" onChange={handleFileChange} />
+                      <button onClick={onFileUpload}>Upload</button>
+                    </div>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                  <Paper>
+                    <List>
+                      <ListItem>
+                        <ListItemText primary="File Name" />
+                      </ListItem>
+                      {files.map((file, index) => (
+                        <ListItem
+                          key={file.id} 
+                          onClick={() => setSelectedFile(file)}
+                          style={{ backgroundColor: index % 2 === 1 ? 'lightgray' : 'inherit' }}
+                        >
+                          <ListItemText primary={file.name} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Paper>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
               <Paper>
                 {selectedFile && <FileViewer file={selectedFile} />}
               </Paper>
